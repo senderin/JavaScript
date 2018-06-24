@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- 
+Most often, the purpose of data validation is to ensure correct user input.
+Server side validation is performed by a web server, after input has been sent to the server.
+Client side validation is performed by a web browser, before input is sent to a web server.
+
+HTML5 introduced a new HTML validation concept called constraint validation.
+HTML constraint validation is based on:
+Constraint validation HTML Input Attributes
+Constraint validation CSS Pseudo Selectors
+Constraint validation DOM Properties and Methods:
+		Property	Description
+		checkValidity()	Returns true if an input element contains valid data.
+		setCustomValidity()	Sets the validationMessage property of an input element.
+
+
+-->
+<html>
+<head>
+<script src="JSForms.js"></script>
+</head>
+
+<body>
+<h2>JS Forms</h2>
+<hr>
+
+<h3>Example</h3>
+<form name="myForm" onsubmit="return validateForm()">
+Name: <input type="text" name="fname">
+Surname: <input type="text" name="sname" required> <!-- Automatic HTML Form Validation -->
+<input type="submit" value="Submit">
+</form>
+
+<h3>Example</h3>
+<p>Please input a number between 1 and 10:</p>
+<input id="numb">
+<button type="button" onclick="myFunction()">Submit</button>
+<p id="demo"></p>
+
+<h2>JS Forms API</h2>
+<hr>
+
+<h3>Example</h3>
+<input id="id1" type="number" min="100" max="300" required>
+<button onclick="myFunction2()">OK</button>
+<p id="demo2"></p>
+
+
+
+
+</body>
+</html>

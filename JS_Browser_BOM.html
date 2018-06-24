@@ -1,0 +1,229 @@
+<!--
+//WINDOW
+The Browser Object Model (BOM) allows JavaScript to "talk to" the browser.
+The window object is supported by all browsers. It represents the browser's window.
+All global JavaScript things automatically become members of the window object.
+window.innerHeight - the inner height of the browser window (in pixels)
+window.innerWidth - the inner width of the browser window (in pixels)
+The browser window (the browser viewport) is NOT including toolbars and scrollbars.
+
+Other Window Methods
+window.open() - open a new window
+window.close() - close the current window
+window.moveTo() -move the current window
+window.resizeTo() -resize the current window
+
+//SCREEN
+The window.screen object contains information about the user's screen.
+can be written without the window prefix.
+Properties:
+screen.width
+screen.height
+screen.availWidth
+screen.availHeight
+screen.colorDepth
+screen.pixelDepth
+
+//LOCATION
+The window.location object can be used to get the current page address (URL) and to redirect the browser to a new page.
+can be written without the window prefix.
+Some examples:
+window.location.href returns the href (URL) of the current page
+window.location.hostname returns the domain name of the web host
+window.location.pathname returns the path and filename of the current page
+window.location.protocol returns the web protocol used (http: or https:)
+window.location.assign loads a new document
+
+//HISTORY
+The window.history object contains the browsers history.
+To protect the privacy of the users, there are limitations to how JavaScript can access this object.
+Some methods:
+history.back() - same as clicking back in the browser
+history.forward() - same as clicking forward in the browser
+
+//NAVIGATOR
+The window.navigator object contains information about the visitor's browser.
+Some examples:
+navigator.appName
+navigator.appCodeName
+navigator.platform
+The information from the navigator object can often be misleading, and should not be used to detect browser versions
+
+//TIMING EVENTS
+JavaScript can be executed in time-intervals.
+This is called timing events.
+The two key methods to use with JavaScript are:
+setTimeout(function, milliseconds)
+Executes a function, after waiting a specified number of milliseconds.
+setInterval(function, milliseconds)
+Same as setTimeout(), but repeats the execution of the function continuously.
+The clearTimeout() method stops the execution of the function specified in setTimeout().
+
+//COOKIES
+Cookies let you store user information in web pages.
+When a browser requests a web page from a server, cookies belonging to the page is added to the request. This way the server gets the necessary data to "remember" information about users.
+-->
+
+<!DOCTYPE html>
+<html>
+<body onload="checkCookie()">
+<h3>Example: (covering all browsers) </h3>
+<p id="demo"></p>
+<input type="button" value="Load new document" onclick="newDoc()">
+<input type="button" value="Back" onclick="goBack()">
+<input type="button" value="Forward" onclick="goForward()">
+<input type="button" value="Alert Box" onclick="alertBox()">
+<input type="button" value="Confirm Box" onclick="confirmBox()">
+<input type="button" value="Prompt Box" onclick="promptBox()">
+<br>
+<button onclick="myVar=setTimeout(alertBox, 3000)">Try setTimeout</button>
+<button onclick="clearTimeout(myVar)">Stop it</button>
+<br>
+<p id="demo2"></p>
+<button onclick="clearInterval(myVar2)">Stop time</button>
+<br><br>
+<p>
+<button type="button" onclick='displayCookies()'>Display All Cookies</button>&nbsp;
+<button type="button" onclick='document.cookie="firstname=John;expires=Wed, 18 Dec 2023 12:00:00 GMT"'>Create Cookie 1</button>&nbsp;
+<button type="button" onclick='document.cookie="lastname=Smith;expires=Wed, 18 Dec 2023 12:00:00 GMT"'>Create Cookie 2</button>
+<button type="button" onclick='document.cookie="firstname=;expires=Wed; 01 Jan 1970"'>Delete Cookie 1</button>&nbsp;
+<button type="button" onclick='document.cookie="lastname=;expires=Wed 01 Jan 1970"'>Delete Cookie 2</button>
+
+</p>
+
+<script>
+//WINDOW
+var w = window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
+var h = window.innerHeight
+|| document.documentElement.clientHeight
+|| document.body.clientHeight;
+
+var x = document.getElementById("demo");
+x.innerHTML = "Browser inner window width: " + w + ", height: " + h + ".";
+
+//SCREEN
+x.innerHTML+="<br>"+"Screen width: "+screen.width+", Screen height: "+screen.height+" (as piksels)";
+
+//Returns the width of the visitor's screen, in pixels, minus interface features like the Windows Taskbar
+x.innerHTML+="<br>"+"Screen available width: "+screen.width+", Screen available height: "+screen.height+" (as piksels)";
+
+x.innerHTML+="<br>"+"Screen color depth: "+screen.colorDepth;
+x.innerHTML+="<br>"+"Screen piksel depth: "+screen.colorDepth;
+
+//LOCATION
+x.innerHTML+="<br>"+"Location of current page: "+location.href;
+x.innerHTML+="<br>"+"Page hostname: "+location.hostname;
+x.innerHTML+="<br>"+"Page path: "+location.pathname;
+x.innerHTML+="<br>"+"Page protocol: "+location.protocol;
+//If the port number is default (80 for http and 443 for https), most browsers will display 0 or nothing.
+x.innerHTML+="<br>"+"Port: "+location.port;
+function newDoc() {
+    window.location.assign("https://www.w3schools.com")
+}
+
+//HISTORY
+function goBack() {
+    window.location.back();
+}
+function goForward() {
+    window.location.forward();
+}
+
+//NAVIGATOR
+x.innerHTML +="<br> cookiesEnabled is " + navigator.cookieEnabled;
+//Strange enough, "Netscape" is the application name for both IE11, Chrome, Firefox, and Safari.
+x.innerHTML +="<br> navigator.appName is " + navigator.appName;
+//"Mozilla" is the application code name for both Chrome, Firefox, IE, Safari, and Opera.
+x.innerHTML +="<br> navigator.appCodeName is " + navigator.appCodeName;
+//Do not rely on this. Most browsers returns "Gecko" as product name !!
+x.innerHTML +="<br> navigator.product is " + navigator.product;
+x.innerHTML +="<br> navigator.appVersion is " + navigator.appVersion;
+x.innerHTML +="<br> navigator.userAgent is " + navigator.userAgent;
+x.innerHTML +="<br> navigator.platform is " + navigator.platform;
+x.innerHTML +="<br> navigator.language is " + navigator.language;
+x.innerHTML +="<br> navigator.onLine is " + navigator.onLine;
+x.innerHTML +="<br> navigator.javaEnabled() is " + navigator.javaEnabled();
+
+//POPUP ALERT
+function alertBox() {
+    window.alert("It is an alert box\nIt is an alert box");
+}
+function confirmBox() {
+    window.confirm("Are you sure?");
+	//OR
+	//if (confirm("Are you sure?")) {
+        //txt = "You pressed OK!";
+    //} else {
+        //txt = "You pressed Cancel!";
+    //}
+}
+function promptBox() {
+    //window.prompt("Please enter your name:", "Harry Potter");
+	if (person == null || person == "") {
+		//txt = "User cancelled the prompt.";
+	} else {
+		//txt = "Hello " + person + "! How are you today?";
+	}
+}
+
+//TIMING EVENTS
+var myVar2 = setInterval(myTimer, 1000);
+
+function myTimer() {
+    var d = new Date();
+    document.getElementById("demo2").innerHTML = d.toLocaleTimeString();
+}
+
+//COOKIES
+function setCookie(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkCookie() {
+    var user=getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+       user = prompt("Please enter your name:","");
+       if (user != "" && user != null) {
+           setCookie("username", user, 30);
+       }
+    }
+}
+
+
+function displayCookies() {
+var fname=getCookie("firstname");
+if (fname==null) {fname="";}
+if (fname!="") {fname="firstname="+fname;}
+var lname=getCookie("lastname");
+if (lname==null) {lname="";}
+if (lname!="") {lname="lastname="+lname;}
+alert (fname + " " + lname);
+}
+
+</script>
+
+</body>
+</html>

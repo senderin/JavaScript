@@ -1,0 +1,140 @@
+<!--
+JavaScript arguments are passed by value: The function only gets to know the values, not the argument's locations.
+Changes to arguments are not visible (reflected) outside the function.
+-->
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Javascript Functions</h2>
+<hr>
+
+<h3>Example:</h3>
+<p id="demo"></p>
+<script>
+var x = function (a, b) {return a * b};
+document.getElementById("demo").innerHTML = x(4, 3);
+</script>
+
+<h3>Example:</h3>
+<!-- Self-Invoking Functions 
+A self-invoking expression is invoked (started) automatically, without being called.
+-->
+<p id="demo2"></p>
+<script>
+(function () { //anonymous self-invoking function (function without name)
+    document.getElementById("demo2").innerHTML = "Hello! I called myself";
+})();
+</script>
+
+<h3>Example:</h3>
+<p id="demo3"></p>
+<script>
+function myFunction(a, b, c) {
+    return arguments.length;
+}
+document.getElementById("demo3").innerHTML = myFunction(4, 3, 5);
+</script>
+
+<h3>Example:</h3>
+
+<p id="demo4"></p>
+<script>
+//Global functions automatically become window methods. Invocing myFunction() is the same as invocong window.myFunction()
+function myFunction(a, b) {
+    return a * b;
+}
+document.getElementById("demo4").innerHTML = window.myFunction(10, 2); 
+</script>
+
+<h2>Function Call</h2>
+<hr>
+<h3>Example:</h3>
+<!--
+Method Reuse:With the call() method, you can write a method that can be used on different objects.
+With call(), an object can use a method belonging to another object.
+-->
+<p id="demo5"></p>
+
+<script>
+var person = {
+    fullName: function() {
+        return this.firstName + " " + this.lastName;
+    },
+	info: function(city, country) {
+        return this.firstName + " " + this.lastName + "," + city + "," + country;
+   }
+}	
+
+var person1 = {
+    firstName:"John",
+    lastName: "Doe",
+}
+var person2 = {
+    firstName:"Mary",
+    lastName: "Doe",
+}
+var x=person.fullName.call(person1);
+var y=person.info.call(person2, "Oslo", "Norway");
+document.getElementById("demo5").innerHTML = x+"<br>"+y; 
+</script>
+
+<h2>Function Apply</h2>
+<hr>
+<h3>Example:</h3>
+<!--
+Method Reuse:With the apply() method, you can write a method that can be used on different objects.
+The call() method takes arguments separately.
+The apply() method takes arguments as an array.
+-->
+<p id="demo6"></p>
+<p id="demo7"></p>
+
+<script>
+var person = {
+    fullName: function(city, country) {
+        return this.firstName + " " + this.lastName + "," + city + "," + country;
+    }
+}
+var person1 = {
+    firstName:"John",
+    lastName: "Doe",
+}
+var x = person.fullName.apply(person1, ["Oslo", "Norway"]); 
+document.getElementById("demo6").innerHTML = x; 
+
+//Since JavaScript arrays do not have a max() method, you can apply the Math.max() method instead.
+document.getElementById("demo7").innerHTML = Math.max.apply(null, [1,2,3]);
+</script>
+
+<h2>Nested Function</h2>
+<hr>
+<h3>Example:</h3>
+<p id="demo8">0</p>
+
+<script>
+document.getElementById("demo8").innerHTML = add();
+function add() {
+    var counter = 0;
+    function plus() {counter += 1;}
+    plus();    
+    return counter; 
+}
+</script>
+
+<h2>Nested Function</h2>
+<hr>
+<h3>Example:</h3>
+<button type="button" onclick="myFunction()">Count!</button>
+<p id="demo9">0</p>
+<script>
+var add = (function () {
+    var counter = 0;
+    return function () {counter += 1; return counter;}
+})();
+
+function myFunction(){
+    document.getElementById("demo9").innerHTML = add();
+}
+</script>
+</body>
+</html>

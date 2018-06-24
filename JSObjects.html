@@ -1,0 +1,128 @@
+<!--
+Objects written as name value pairs are similar to:
+Associative arrays in PHP
+Dictionaries in Python
+Hash tables in C
+Hash maps in Java
+Hashes in Ruby and Perl
+
+JavaScript Objects are Mutable
+Note: JavaScript variables are not mutable. Only JavaScript objects.
+Objects are mutable: They are addressed by reference, not by value.
+
+JavaScript objects inherit the properties of their prototype.
+The delete keyword does not delete inherited properties, but if you delete a prototype property, it will affect all objects inherited from the prototype.
+Date objects inherit from Date.prototype. Array objects inherit from Array.prototype. Person objects inherit from Person.prototype.
+The Object.prototype is on the top of the prototype inheritance chain.
+
+
+-->
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>JavaScript Objects</h2>
+<hr>
+
+<h3>Example:</h3>
+
+<p id="demo"></p>
+<p id="demo2"></p>
+<p id="demo3"></p>
+<p id="demo4"></p>
+<p id="demo5"></p>
+<p id="demo6"></p>
+
+<script>
+var person = {
+    firstName : "John",
+    lastName  : "Doe",
+    age       : 50,
+    eyeColor  : "blue"
+};
+
+var x=person; //The object x is not a copy of person. It is person. Both x and person are the same object. 
+
+document.getElementById("demo").innerHTML =
+person.firstName + " is " + person.age + " years old.";
+
+document.getElementById("demo2").innerHTML =
+person.firstName + " is " + person.age + " years old.";
+
+x.age = 10; //// This will change both x.age and person.age
+
+document.getElementById("demo3").innerHTML =
+person.firstName + " is " + person.age + " years old.";
+
+document.getElementById("demo4").innerHTML =
+person.firstName + " is " + person.age + " years old.";
+
+person.nationality = "English"; //adding new property
+
+delete person.age;   // or delete person["age"]; 
+var x;
+var txt = "";
+for (x in person) {
+    txt += person[x]+" ";
+}
+document.getElementById("demo5").innerHTML =txt;
+
+person.fullName = function() {   //adding a method property to an object
+        return this.firstName + " " + this.lastName;
+}
+
+document.getElementById("demo6").innerHTML =person.fullName();
+</script>
+
+<h3>Example:</h3>
+
+<p id="demo7"></p>
+<script>
+var message = "Hello world!";
+var x = message.toUpperCase();
+document.getElementById("demo7").innerHTML=x;
+</script>
+
+<h2>JavaScript Object Constructors</h2>
+<hr>
+<!--
+Sometimes we need a "blueprint" for creating many objects of the same "type".
+The way to create an "object type", is to use an object constructor function.
+
+You can NOT add a new property to a constructor function
+Person.nationality = "English";
+-->
+<h3>Example:</h3>
+<p id="demo8"></p>
+
+<script>
+
+// Constructor function for Person objects
+function Person(first, last, age, eye) {
+    this.firstName = first;
+    this.lastName = last;
+    this.age = age;
+    this.eyeColor = eye;
+    this.changeName = function (name) {
+        this.lastName = name;
+    };
+}
+
+// Create a Person object
+var myFather = new Person("John", "Doe", 50, "blue");
+myFather.changeName("Doe");
+
+// Display age
+document.getElementById("demo8").innerHTML =
+"My father is " + myFather.age + "."; 
+
+//The JavaScript prototype property allows you to add new properties to object constructors:
+Person.prototype.nickName = "X";
+Person.prototype.nameSurname= function() {
+    return this.firstName + " " + this.lastName;
+};
+//Only modify your own prototypes. Never modify the prototypes of standard JavaScript objects.
+</script>
+
+</body>
+</html>
